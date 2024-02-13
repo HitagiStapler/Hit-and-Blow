@@ -1,177 +1,16 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hit&Brow</title>
-  </head>
-  <body>
-    <div class="content">
-      <div class="game">
-        <div class="table">
-          <table>
-            <thead>
-              <th>0</th>
-              <th>Guess</th>
-              <th>Hit</th>
-              <th>Blow</th>
-            </thead>
-            <tbody>
-              <tr class="tr">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr class="tr">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr class="tr">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr class="tr">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr class="tr">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr class="tr">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr class="tr">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr class="tr">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr class="tr">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="input">
-          <div id="input-left" class="input-box selected"></div>
-          <div id="input-center" class="input-box"></div>
-          <div id="input-right" class="input-box input-right"></div>
-        </div>
-        <div class="numbers">
-          <div class="row">
-            <button
-              class="number-btn"
-              id="btn-0"
-              value="0"
-              onclick="input(event)">
-              0
-            </button>
-            <button
-              class="number-btn"
-              id="btn-1"
-              value="1"
-              onclick="input(event)">
-              1
-            </button>
-            <button
-              class="number-btn"
-              id="btn-2"
-              value="2"
-              onclick="input(event)">
-              2
-            </button>
-            <button
-              class="number-btn"
-              id="btn-3"
-              value="3"
-              onclick="input(event)">
-              3
-            </button>
-            <button
-              class="number-btn"
-              id="btn-4"
-              value="4"
-              onclick="input(event)">
-              4
-            </button>
-          </div>
-          <div class="row">
-            <button
-              class="number-btn"
-              id="btn-5"
-              value="5"
-              onclick="input(event)">
-              5
-            </button>
-            <button
-              class="number-btn"
-              id="btn-6"
-              value="6"
-              onclick="input(event)">
-              6
-            </button>
-            <button
-              class="number-btn"
-              id="btn-7"
-              value="7"
-              onclick="input(event)">
-              7
-            </button>
-            <button
-              class="number-btn"
-              id="btn-8"
-              value="8"
-              onclick="input(event)">
-              8
-            </button>
-            <button
-              class="number-btn"
-              id="btn-9"
-              value="9"
-              onclick="input(event)">
-              9
-            </button>
-          </div>
-          <div class="row">
-            <button id="remove-btn" value="remove" onclick="toggleRemoveMode()">
-              remove
-            </button>
-            <button id="back-btn" value="back" onclick="back()">back</button>
-            <button id="enter-btn" value="enter" onclick="enter()">
-              enter
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hit&Brow</title>
   <style>
     .content {
       width: 100vw;
       display: flex;
       justify-content: center;
+      flex-direction: column;
+      align-items: center;
     }
     .game {
       width: 400px;
@@ -274,39 +113,132 @@
       background-color: #ffffff;
       border-color: #acacac;
     }
-  </style>
-  <script>
-    /* 答え*/
-    const target = [];
-    /* プレイヤーからの入力値*/
-    const inputs = [];
-    /* 入力結果*/
-    const results = [];
 
-    /* 解答上限*/
-    const answerLimit = document.getElementsByClassName("tr").length;
+    .stats {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="stats">
+    <p>Times Cleared: <span id="timesCleared">0</span></p>
+    <p>Average Guesses: <span id="averageGuesses">0</span></p>
+  </div>
+  <div class="content">
+    <div class="game">
+      <div class="table">
+        <table>
+          <thead>
+            <th>0</th>
+            <th>Guess</th>
+            <th>Hit</th>
+            <th>Blow</th>
+          </thead>
+          <tbody id="guessesTable">
+            <tr class="tr">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr class="tr">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr class="tr">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr class="tr">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr class="tr">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr class="tr">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr class="tr">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr class="tr">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr class="tr">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="input">
+        <div id="input-left" class="input-box selected"></div>
+        <div id="input-center" class="input-box"></div>
+        <div id="input-right" class="input-box input-right"></div>
+      </div>
+      <div class="numbers">
+        <div class="row">
+          <button class="number-btn" id="btn-0" value="0" onclick="input(event)">0</button>
+          <button class="number-btn" id="btn-1" value="1" onclick="input(event)">1</button>
+          <button class="number-btn" id="btn-2" value="2" onclick="input(event)">2</button>
+          <button class="number-btn" id="btn-3" value="3" onclick="input(event)">3</button>
+          <button class="number-btn" id="btn-4" value="4" onclick="input(event)">4</button>
+        </div>
+        <div class="row">
+          <button class="number-btn" id="btn-5" value="5" onclick="input(event)">5</button>
+          <button class="number-btn" id="btn-6" value="6" onclick="input(event)">6</button>
+          <button class="number-btn" id="btn-7" value="7" onclick="input(event)">7</button>
+          <button class="number-btn" id="btn-8" value="8" onclick="input(event)">8</button>
+          <button class="number-btn" id="btn-9" value="9" onclick="input(event)">9</button>
+        </div>
+        <div class="row">
+          <button id="remove-btn" value="remove" onclick="toggleRemoveMode()">remove</button>
+          <button id="back-btn" value="back" onclick="back()">back</button>
+          <button id="enter-btn" value="enter" onclick="enter()">enter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    let target = [];
+    const inputs = [];
+    const results = [];
+    const answerLimit = 9; 
     let removeMode = false;
-    createRandomTarget();
+    let clearedCount = 0;
 
     function createRandomTarget() {
-
-  
-      function generateRandomNumbers() {
-  
-
-      for (let i = 0; i < 3; i++) {
-        const randomNumber = Math.floor(Math.random()*10);
-        target.push(randomNumber);
+      let numbers = [];
+      while (numbers.length < 3) {
+        let randomNumber = Math.floor(Math.random() * 10);
+        if (!numbers.includes(randomNumber)) {
+          numbers.push(randomNumber);
+        }
       }
-      target.splice(randomNumber);
-
-      // TODO 正解となる数字をランダムに生成すること
-      // TODO 3つの0～9で構成された配列(かぶりなし)が生成されること
-      // 例: [8,2,0]
-
-
+      target = numbers;
     }
-  }
 
     function input(event) {
       const value = event.target.value;
@@ -317,7 +249,6 @@
         } else {
           btn.classList.add("removed");
         }
-
         return;
       }
 
@@ -342,6 +273,8 @@
         inputs.splice(0);
         reload();
         if (clear) {
+          clearedCount++;
+          document.getElementById("timesCleared").textContent = clearedCount;
           alert(`CLEAR!!\n正解は${target}`);
           reset();
         }
@@ -356,15 +289,13 @@
       let hit = 0;
       let blow = 0;
 
-
-      
-      if (input==target)
-      hit++
-      else
-      blow++;
-      
-
-      // TODO targetとinputsを比較しhitとblowをカウントすること
+      for (let i = 0; i < target.length; i++) {
+        if (parseInt(inputs[i]) === target[i]) {
+          hit++;
+        } else if (target.includes(parseInt(inputs[i]))) {
+          blow++;
+        }
+      }
 
       const result = {
         inputs: inputs.concat(),
@@ -373,7 +304,7 @@
       };
       results.push(result);
 
-      return result.hit == 3;
+      return hit == 3;
     }
 
     function reload() {
@@ -408,24 +339,32 @@
         }
       }
 
-      const trElements = document.getElementsByClassName("tr");
-
+      const tbody = document.getElementById("guessesTable");
+      tbody.innerHTML = "";
       for (let i = 0; i < answerLimit; i++) {
+        const tr = document.createElement("tr");
+        const td1 = document.createElement("td");
+        const td2 = document.createElement("td");
+        const td3 = document.createElement("td");
+        const td4 = document.createElement("td");
+
         if (results[i]) {
-          trElements[i].children[0].innerText = i + 1;
-          trElements[i].children[1].innerText = results[i].inputs;
-          trElements[i].children[2].innerText = results[i].hit;
-          trElements[i].children[3].innerText = results[i].blow;
-        } else {
-          trElements[i].children[0].innerText = "";
-          trElements[i].children[1].innerText = "";
-          trElements[i].children[2].innerText = "";
-          trElements[i].children[3].innerText = "";
+          td1.textContent = i + 1;
+          td2.textContent = results[i].inputs.join('');
+          td3.textContent = results[i].hit;
+          td4.textContent = results[i].blow;
         }
+        
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        tr.appendChild(td4);
+        tbody.appendChild(tr);
       }
     }
 
     function reset() {
+      target.length = 0;
       createRandomTarget();
       inputs.splice(0);
       results.splice(0);
@@ -433,6 +372,12 @@
         btn.classList.remove("removed");
       });
       reload();
+
+      const averageGuessesSpan = document.getElementById("averageGuesses");
+      const currentAverage = parseFloat(averageGuessesSpan.textContent);
+      const totalGuesses = results.reduce((total, result) => total + result.inputs.length, 0);
+      const newAverage = totalGuesses / (clearedCount || 1);
+      averageGuessesSpan.textContent = newAverage.toFixed(2); 
     }
 
     function toggleRemoveMode() {
@@ -451,5 +396,8 @@
         enterBtn.removeAttribute("disabled");
       }
     }
+
+    createRandomTarget(); 
   </script>
+</body>
 </html>
